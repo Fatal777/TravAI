@@ -1,0 +1,178 @@
+/* Base Styles */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --brand-primary: #4F46E5;
+  --brand-secondary: #4338CA;
+  --dark-bg: #1a202c;
+  --light-bg: #f7fafc;
+}
+
+/* Animations */
+@keyframes logo-float {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(3deg);
+  }
+
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float 6s ease-in-out 1.5s infinite;
+}
+
+/* Utility Classes */
+.text-gradient {
+  background: linear-gradient(45deg, var(--brand-primary), var(--brand-secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.logo-hover-animation:hover {
+  animation: logo-float 1.5s ease-in-out infinite;
+}
+
+.fade-in {
+  animation: fade-in 0.5s ease-in;
+}
+
+/* Layout Styles */
+body {
+  @apply bg-gray-50 dark:bg-gray-900 transition-colors duration-300;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Dashboard Grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  @apply p-6;
+}
+
+/* Navbar */
+.k-appbar {
+  @apply backdrop-blur-lg bg-white/80 dark:bg-gray-800/80 !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.dark .k-appbar {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Splash Screen */
+.splash-container {
+  @apply fixed inset-0 bg-white dark:bg-gray-900 flex flex-col items-center justify-center;
+  animation: fade-in 0.5s ease-out;
+}
+
+.splash-logo {
+  @apply h-48 w-48 opacity-90;
+  filter: drop-shadow(0 4px 6px rgba(0, 131, 255, 0.2));
+}
+
+/* Trip Card */
+.trip-card {
+  @apply bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.dark .trip-card {
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Form Overrides */
+.k-stepper {
+  @apply mb-8 rounded-lg overflow-hidden;
+}
+
+.k-stepper .k-step-current .k-step-indicator {
+  @apply bg-brand-primary !important;
+}
+
+.k-form {
+  @apply space-y-6;
+}
+
+/* Charts */
+.chart-container {
+  @apply bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm;
+  min-height: 400px;
+}
+
+/* Scheduler */
+.k-scheduler {
+  @apply rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700;
+}
+
+.k-scheduler-toolbar {
+  @apply bg-gray-50 dark:bg-gray-800;
+}
+
+/* Loading Overlay */
+.loading-overlay {
+  @apply absolute inset-0 bg-white/80 dark:bg-gray-900/80 flex items-center justify-center rounded-xl;
+  backdrop-filter: blur(4px);
+}
+
+/* Dark Mode Transitions */
+.dark-mode-transition * {
+  @apply transition-colors duration-200;
+}
+
+/* Watermark */
+.brand-watermark {
+  @apply fixed inset-0 opacity-5 pointer-events-none;
+  background-image: url('../assets/TravAI-logo-watermark.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 70%;
+}
+
+/* Responsive Tweaks */
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .splash-logo {
+    @apply h-32 w-32;
+  }
+}

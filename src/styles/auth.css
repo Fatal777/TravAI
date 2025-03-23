@@ -1,0 +1,83 @@
+/* Full-screen background with transition */
+body {
+    background: url('/images/bg1.jpg') no-repeat center center/cover;
+    transition: background 1s ease-in-out;
+}
+
+body.background-transition {
+    background: url('/images/bg2.jpg') no-repeat center center/cover;
+}
+
+/* Centered authentication container */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Card styling */
+.auth-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 400px;
+}
+
+/* Inputs */
+.auth-form input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Buttons */
+.auth-button {
+    width: 100%;
+    padding: 10px;
+    background: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.auth-button:hover {
+    background: #0056b3;
+}
+
+/* Social Login Buttons */
+.social-login {
+    margin-top: 20px;
+}
+
+.social-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.google {
+    background: #DB4437;
+    color: white;
+}
+
+.facebook {
+    background: #4267B2;
+    color: white;
+}
+
+.icon {
+    margin-right: 10px;
+}
