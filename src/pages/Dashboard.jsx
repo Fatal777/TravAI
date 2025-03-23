@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { TripContext } from "../contexts/TripContext";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/common/Sidebar";
-import Chatbox from "../components/common/Chatbox";
+import ChatBox from "../components/common/ChatBox";
 import Loading from "../components/common/Loading";
 import { motion } from "framer-motion";
 import axios from "axios";
@@ -165,7 +165,7 @@ const Dashboard = () => {
                     )}
                 </motion.div>
 
-                <Chatbox className="fixed bottom-6 right-6 z-50" />
+                <ChatBox className="fixed bottom-6 right-6 z-50" />
             </motion.div>
         </div>
     );
