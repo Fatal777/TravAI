@@ -6,6 +6,73 @@ import { Window } from "@progress/kendo-react-dialogs";
 import { Avatar } from "@progress/kendo-react-layout";
 import { Loader } from "@progress/kendo-react-indicators";
 import { generateItinerary } from "../../services/cloudflareAIService";
+const geminiLogo = "/gemini-logo.svg";
+
+// Custom styles for the component
+const customStyles = `
+  /* Window and title styles */
+  .k-window-titlebar {
+    background-color: #111827 !important;
+    border-bottom: 1px solid #374151 !important;
+  }
+  
+  .k-window-title {
+    color: white !important;
+  }
+
+  .k-window-actions .k-icon {
+    color: #f97316 !important;
+    font-size: 20px !important;
+  }
+  
+  /* Scrollbar styling */
+  .chat-messages::-webkit-scrollbar {
+    width: 8px !important;
+  }
+  
+  .chat-messages::-webkit-scrollbar-track {
+    background: #1f2937 !important;
+    border-radius: 10px !important;
+  }
+  
+  .chat-messages::-webkit-scrollbar-thumb {
+    background: #4f46e5 !important;
+    border-radius: 10px !important;
+    transition: background 0.3s ease !important;
+  }
+  
+  .chat-messages::-webkit-scrollbar-thumb:hover {
+    background: #6366f1 !important;
+  }
+  
+  /* Custom send button */
+  .custom-send-btn {
+    background-color: #4f46e5 !important;
+    border-color: #4f46e5 !important;
+    border-radius: 8px !important;
+    transition: all 0.2s ease !important;
+    width: 40px !important;
+    height: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  
+  .custom-send-btn:hover {
+    background-color: #6366f1 !important;
+    transform: translateY(-2px) !important;
+  }
+  
+  .custom-send-btn:active {
+    transform: translateY(0) !important;
+  }
+  
+  .custom-send-icon {
+    fill: white !important;
+    width: 18px !important;
+    height: 18px !important;
+  }
+`;
 
 const ChatBox = ({ trip }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -20,6 +87,17 @@ const ChatBox = ({ trip }) => {
     });
 
     const messagesEndRef = useRef(null);
+
+    // Add custom styles to the document
+    useEffect(() => {
+        const styleElement = document.createElement('style');
+        styleElement.innerHTML = customStyles;
+        document.head.appendChild(styleElement);
+
+        return () => {
+            document.head.removeChild(styleElement);
+        };
+    }, []);
 
     useEffect(() => {
         if (trip) {
@@ -121,6 +199,24 @@ const ChatBox = ({ trip }) => {
         }
     };
 
+    // Custom send button with SVG icon
+    const SendButton = () => (
+        <button
+            className="custom-send-btn"
+            onClick={handleSendMessage}
+            disabled={loading}
+        >
+            <svg
+                className="custom-send-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+            >
+                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+            </svg>
+        </button>
+    );
+
     return (
         <div className="fixed bottom-6 right-6 z-50">
             {!isOpen ? (
@@ -130,20 +226,33 @@ const ChatBox = ({ trip }) => {
                     onClick={() => setIsOpen(true)}
                     className="shadow-xl"
                 >
-                    <Avatar type="icon">
-                        <span className="k-icon k-i-comment" />
+                    <Avatar type="image">
+                        <img
+                            src={geminiLogo}
+                            alt="Gemini Logo"
+                            className="w-8 h-8 rounded-full object-cover bg-transparent"
+                        />
                     </Avatar>
                 </Button>
             ) : (
                 <Window
-                    title="Travel Assistant"
+                    title={
+                        <div className="flex items-center space-x-2 text-white">
+                            <img
+                                src={geminiLogo}
+                                alt="TravAi Logo"
+                                className="w-6 h-6 rounded-full object-cover"
+                            />
+                            <span>TravAi Assistant</span>
+                        </div>
+                    }
                     initialWidth={320}
                     initialHeight={500}
                     onClose={() => setIsOpen(false)}
-                    className="rounded-xl shadow-xl"
+                    className="rounded-xl shadow-xl bg-gray-900 text-white custom-window"
                 >
                     <div className="flex flex-col h-full">
-                        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                        <div className="flex-1 overflow-y-auto p-4 space-y-4 chat-messages">
                             {messages.map((msg, index) => (
                                 <Notification
                                     key={index}
@@ -159,27 +268,21 @@ const ChatBox = ({ trip }) => {
                             <div ref={messagesEndRef} />
                         </div>
 
-                        <div className="p-4 border-t">
+                        <div className="p-4 border-t border-gray-700">
                             <div className="flex gap-2 mb-4">
                                 <TextBox
                                     value={inputMessage}
                                     onChange={(e) => setInputMessage(e.value)}
                                     onKeyDown={handleKeyDown}
                                     placeholder="Type a message..."
-                                    className="flex-1"
+                                    className="flex-1 bg-gray-800 text-white placeholder-gray-400"
                                 />
-                                <Button
-                                    themeColor="primary"
-                                    onClick={handleSendMessage}
-                                    disabled={loading}
-                                >
-                                    <span className="k-icon k-i-send" />
-                                </Button>
+                                <SendButton />
                             </div>
 
                             <Button
                                 themeColor="success"
-                                className="w-full"
+                                className="w-full bg-green-600 hover:bg-green-700"
                                 onClick={checkAndGenerateItinerary}
                                 disabled={loading}
                             >
